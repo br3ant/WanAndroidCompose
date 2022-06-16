@@ -72,12 +72,3 @@ data class ArticleListData(
         val url: String?
     )
 }
-
-/**
- * 轮播图数据
- */
-@Keep
-data class BannerData(
-    val imageUrl: String,
-    val linkUrl: String
-)
