@@ -73,7 +73,7 @@ fun WanBackground(
  * @param content The background content.
  */
 @Composable
-fun NiaGradientBackground(
+fun WanGradientBackground(
     modifier: Modifier = Modifier,
     topColor: Color = LocalBackgroundTheme.current.primaryGradientColor,
     bottomColor: Color = LocalBackgroundTheme.current.secondaryGradientColor,
@@ -164,7 +164,7 @@ fun BackgroundAndroid() {
 @Composable
 fun GradientBackgroundDefault() {
     WanTheme {
-        NiaGradientBackground(Modifier.size(100.dp), content = {})
+        WanGradientBackground(Modifier.size(100.dp), content = {})
     }
 }
 
@@ -173,7 +173,7 @@ fun GradientBackgroundDefault() {
 @Composable
 fun GradientBackgroundDynamic() {
     WanTheme(dynamicColor = true) {
-        NiaGradientBackground(Modifier.size(100.dp), content = {})
+        WanGradientBackground(Modifier.size(100.dp), content = {})
     }
 }
 
@@ -182,6 +182,6 @@ fun GradientBackgroundDynamic() {
 @Composable
 fun GradientBackgroundAndroid() {
     WanTheme(androidTheme = true) {
-        NiaGradientBackground(Modifier.size(100.dp), content = {})
+        WanGradientBackground(Modifier.size(100.dp), content = {})
     }
 }

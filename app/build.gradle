@@ -60,6 +60,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
     implementation 'androidx.activity:activity-compose:1.4.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1"
+    implementation "com.google.android.material:material:1.6.1"
 
     //paging3
     implementation "androidx.paging:paging-runtime:3.1.1"

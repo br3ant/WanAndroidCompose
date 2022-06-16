@@ -11,12 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import com.br3ant.wanandroidcompose.ui.component.Banner
 import com.br3ant.wanandroidcompose.ui.component.HomeCardItemContent
-import com.br3ant.wanandroidcompose.ui.component.NiaGradientBackground
+import com.br3ant.wanandroidcompose.ui.component.WanGradientBackground
 import com.br3ant.wanandroidcompose.ui.component.SwipeRefreshContent
 import com.google.accompanist.pager.ExperimentalPagerApi
 
@@ -35,8 +36,8 @@ fun HomeRoute(
     val homeViewModel: HomeViewModel = viewModel()
     val bannerListData by homeViewModel.bannerListData.collectAsState()
     val homeListData = homeViewModel.homeListData.collectAsLazyPagingItems()
-    NiaGradientBackground {
-        Scaffold { innerPadding ->
+    WanGradientBackground {
+        Scaffold(containerColor = Color.Transparent) { innerPadding ->
             BoxWithConstraints(
                 modifier = modifier
                     .padding(innerPadding)
