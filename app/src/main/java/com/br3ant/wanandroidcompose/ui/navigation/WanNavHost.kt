@@ -47,9 +47,7 @@ fun WanNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        homeGraph(
-            windowSizeClass = windowSizeClass
-        )
+        homeGraph()
         bookGraph(
             navigateToChapter = { bookId, bookName -> navController.navigate("${ChapterDestination.route}/$bookId/$bookName") },
             nestedGraphs = {

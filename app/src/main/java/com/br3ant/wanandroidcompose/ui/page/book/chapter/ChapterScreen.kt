@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -36,6 +37,7 @@ import com.br3ant.wanandroidcompose.R
 import com.br3ant.wanandroidcompose.ui.component.Banner
 import com.br3ant.wanandroidcompose.ui.component.BookItemContent
 import com.br3ant.wanandroidcompose.ui.component.HomeCardItemContent
+import com.br3ant.wanandroidcompose.ui.component.SimpleCard
 import com.br3ant.wanandroidcompose.ui.component.SwipeRefreshContent
 import com.br3ant.wanandroidcompose.ui.component.WanGradientBackground
 import com.br3ant.wanandroidcompose.ui.component.WanTopAppBar
@@ -88,27 +90,30 @@ fun ChapterRoute(
                     .padding(innerPadding)
                     .consumedWindowInsets(innerPadding)
             ) {
+                val listState = rememberLazyListState()
                 SwipeRefreshContent(
                     chapterListData,
-                    cardHeight = 30.dp
-                ) { _, data ->
-                    val context = LocalContext.current
-                    Column(modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.CenterStart)
-                        .clickable {
-                            WebActivity.open(
-                                context,
-                                data.link ?: ""
+                    state = listState
+                ) { data ->
+                    SimpleCard(cardHeight = 30.dp) {
+                        val context = LocalContext.current
+                        Column(modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.CenterStart)
+                            .clickable {
+                                WebActivity.open(
+                                    context,
+                                    data.link ?: ""
+                                )
+                            }) {
+                            Text(
+                                data.title ?: "",
+                                modifier = Modifier.padding(4.dp),
+                                maxLines = 1,
+                                color = Color.Black,
+                                fontSize = 14.sp
                             )
-                        }) {
-                        Text(
-                            data.title ?: "",
-                            modifier = Modifier.padding(4.dp),
-                            maxLines = 1,
-                            color = Color.Black,
-                            fontSize = 14.sp
-                        )
+                        }
                     }
                 }
             }

@@ -13,10 +13,8 @@ object HomeDestination : WanNavigationDestination {
     override val destination = "home_destination"
 }
 
-fun NavGraphBuilder.homeGraph(
-    windowSizeClass: WindowSizeClass
-) {
+fun NavGraphBuilder.homeGraph() {
     composable(route = HomeDestination.route) {
-        HomeRoute(windowSizeClass)
+        HomeRoute()
     }
 }

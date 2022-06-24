@@ -1,18 +1,22 @@
 package com.br3ant.wanandroidcompose.ui.component
 
-import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -25,14 +29,14 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 @Composable
 fun <T : Any> SwipeRefreshContent(
     lazyPagingListData: LazyPagingItems<T>,
-    cardHeight: Dp = 120.dp,
-    state: LazyListState = rememberLazyListState(),
+    state: LazyListState,
     header: LazyListScope.() -> Unit = {},
-    content: @Composable (index: Int, data: T) -> Unit
+    content: @Composable (data: T) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
 
-        val refreshState = rememberSwipeRefreshState(false)
+        val refreshState =
+            rememberSwipeRefreshState(lazyPagingListData.loadState.refresh is LoadState.Loading)
 
         SwipeRefresh(
             state = refreshState,
@@ -42,65 +46,40 @@ fun <T : Any> SwipeRefreshContent(
             }
         ) {
             //列表数据
-            PagingState(lazyPagingListData, refreshState) {
-                LazyColumn(modifier = Modifier.fillMaxSize(), state = state) {
-                    header()
-                    itemsIndexed(lazyPagingListData) { index, data ->
-                        SimpleCard(cardHeight = cardHeight) {
-                            content(index, data!!)
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(), state = state
+            ) {
+                header()
+                itemsIndexed(lazyPagingListData) { _, data ->
+                    content(data!!)
+                }
+
+                //bottom 加载更多
+                if (lazyPagingListData.loadState.append is LoadState.Loading) {
+                    item {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                        ) {
+                            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                         }
                     }
                 }
             }
         }
-
-    }
-}
-
-/**
- * 带刷新头的Card布局
- * LazyPagingItems<T>
- * Card高度自适应
- */
-@Composable
-fun <T : Any> SwipeRefreshContent(
-    viewModel: ViewModel,
-    listData: List<T>?,
-    state: LazyListState = rememberLazyListState(),
-    noData: () -> Unit,
-    content: @Composable (data: T) -> Unit
-) {
-
-    if (listData == null) return
-
-    if (listData.isEmpty()) {
-        ErrorComposable("暂无数据，请点击重试") {
-            noData()
-        }
-        return
-    }
-
-    Column(modifier = Modifier.fillMaxSize()) {
-
-        val refreshState = rememberSwipeRefreshState(false)
-
-        SwipeRefresh(
-            state = refreshState,
-            onRefresh = {
-                //显示刷新头
-                refreshState.isRefreshing = true
-                //刷新数据
-                noData()
-//                viewModel.sleepTime(3000) {
-//                    refreshState.isRefreshing = false
-//                }
+        if (lazyPagingListData.loadState.refresh is LoadState.Loading) {
+            if (lazyPagingListData.itemCount == 0) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
             }
-        ) {
-            LazyColumn(modifier = Modifier.fillMaxSize(), state = state) {
-                itemsIndexed(listData) { index, data ->
-                    SimpleCard {
-                        content(data)
-                    }
+        } else if (lazyPagingListData.loadState.refresh is LoadState.Error) {
+            Box(modifier = Modifier.fillMaxSize()) {
+                Button(
+                    modifier = Modifier.align(Alignment.Center),
+                    onClick = { lazyPagingListData.refresh() }) {
+                    Text(text = "加载失败，请重试！")
                 }
             }
         }
