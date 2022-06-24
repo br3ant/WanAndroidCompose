@@ -1,16 +1,19 @@
 package com.br3ant.wanandroidcompose.ui.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,7 +36,7 @@ fun <T : Any> SwipeRefreshContent(
     header: LazyListScope.() -> Unit = {},
     content: @Composable (data: T) -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize()) {
 
         val refreshState =
             rememberSwipeRefreshState(lazyPagingListData.loadState.refresh is LoadState.Loading)
@@ -70,14 +73,19 @@ fun <T : Any> SwipeRefreshContent(
         }
         if (lazyPagingListData.loadState.refresh is LoadState.Loading) {
             if (lazyPagingListData.itemCount == 0) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .height(50.dp)
+                            .width(50.dp)
+                            .align(Alignment.Center)
+                    )
                 }
             }
         } else if (lazyPagingListData.loadState.refresh is LoadState.Error) {
-            Box(modifier = Modifier.fillMaxSize()) {
+            Surface(modifier = Modifier.fillMaxSize()) {
                 Button(
-                    modifier = Modifier.align(Alignment.Center),
+                    modifier = Modifier,
                     onClick = { lazyPagingListData.refresh() }) {
                     Text(text = "加载失败，请重试！")
                 }

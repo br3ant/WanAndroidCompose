@@ -10,6 +10,7 @@ import com.br3ant.wanandroidcompose.repo.HomeRepo
 import com.br3ant.wanandroidcompose.ui.entity.ArticleListData
 import com.br3ant.wanandroidcompose.ui.entity.HomeBannerData
 import com.br3ant.wanandroidcompose.utils.paging.CommonPagingSource
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -30,6 +31,7 @@ class HomeViewModel : ViewModel() {
     //首页列表
     val homeListData: Flow<PagingData<ArticleListData>> = Pager(PagingConfig(pageSize = 20)) {
         CommonPagingSource { nextPage: Int ->
+            delay(3000)
             HomeRepo.getHomeList(nextPage)
         }
     }.flow.cachedIn(viewModelScope)
