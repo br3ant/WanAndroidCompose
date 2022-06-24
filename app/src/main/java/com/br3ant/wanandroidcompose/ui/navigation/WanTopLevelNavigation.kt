@@ -18,8 +18,10 @@ package com.br3ant.wanandroidcompose.ui.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Star
 
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -27,7 +29,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.br3ant.wanandroidcompose.R
 import com.br3ant.wanandroidcompose.ui.page.home.HomeDestination
-import com.br3ant.wanandroidcompose.ui.page.tutorial.TutorialDestination
+import com.br3ant.wanandroidcompose.ui.page.book.BookDestination
 
 /**
  * Routes for the different top level destinations in the application. Each of these destinations
@@ -72,9 +74,9 @@ val TOP_LEVEL_DESTINATIONS = listOf(
         iconTextId = R.string.home
     ),
     TopLevelDestination(
-        route = TutorialDestination.route,
-        selectedIcon = Icons.Filled.Star,
-        unselectedIcon = Icons.Outlined.Star,
-        iconTextId = R.string.tutorial
+        route = BookDestination.route,
+        selectedIcon = Icons.Filled.Info,
+        unselectedIcon = Icons.Outlined.Info,
+        iconTextId = R.string.book
     )
 )

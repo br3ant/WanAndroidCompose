@@ -29,6 +29,7 @@ import com.br3ant.wanandroidcompose.ui.entity.ArticleListData
 fun HomeCardItemContent(
     article: ArticleListData,
     stick: Boolean = false,
+    onClick: () -> Unit = {}
 ) {
     article.apply {
         HomeCardItemContent(
@@ -38,7 +39,8 @@ fun HomeCardItemContent(
             niceDate ?: "刚刚",
             title ?: "",
             superChapterName ?: "未知",
-            collect
+            collect,
+            onClick = onClick
         )
     }
 }

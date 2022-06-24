@@ -47,7 +47,7 @@ import com.br3ant.wanandroidcompose.ui.theme.WanTheme
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun MainScreen(windowSizeClass: WindowSizeClass) {
-    WanTheme {
+    WanTheme(dynamicColor = true) {
         val navController = rememberNavController()
         val niaTopLevelNavigation = remember(navController) {
             WanTopLevelNavigation(navController)
@@ -80,7 +80,7 @@ fun MainScreen(windowSizeClass: WindowSizeClass) {
                         )
                 ) {
                     if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact) {
-                        NiaNavRail(
+                        WanNavRail(
                             onNavigateToTopLevelDestination = niaTopLevelNavigation::navigateTo,
                             currentDestination = currentDestination,
                             modifier = Modifier.safeDrawingPadding()
@@ -101,7 +101,7 @@ fun MainScreen(windowSizeClass: WindowSizeClass) {
 }
 
 @Composable
-private fun NiaNavRail(
+private fun WanNavRail(
     onNavigateToTopLevelDestination: (TopLevelDestination) -> Unit,
     currentDestination: NavDestination?,
     modifier: Modifier = Modifier,

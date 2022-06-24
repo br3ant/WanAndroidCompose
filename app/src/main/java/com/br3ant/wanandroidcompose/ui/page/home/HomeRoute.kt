@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
@@ -19,6 +20,7 @@ import com.br3ant.wanandroidcompose.ui.component.Banner
 import com.br3ant.wanandroidcompose.ui.component.HomeCardItemContent
 import com.br3ant.wanandroidcompose.ui.component.WanGradientBackground
 import com.br3ant.wanandroidcompose.ui.component.SwipeRefreshContent
+import com.br3ant.wanandroidcompose.ui.page.webview.WebActivity
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 /**
@@ -55,7 +57,13 @@ fun HomeRoute(
                         //置顶数据
 
                     }) { _, data ->
-                    HomeCardItemContent(article = data)
+                    val context = LocalContext.current
+                    HomeCardItemContent(article = data) {
+                        WebActivity.open(
+                            context,
+                            data.link ?: ""
+                        )
+                    }
                 }
             }
         }

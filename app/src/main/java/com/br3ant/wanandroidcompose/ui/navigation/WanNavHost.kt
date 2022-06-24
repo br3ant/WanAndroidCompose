@@ -24,7 +24,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.br3ant.wanandroidcompose.ui.page.home.HomeDestination
 import com.br3ant.wanandroidcompose.ui.page.home.homeGraph
-import com.br3ant.wanandroidcompose.ui.page.tutorial.tutorialGraph
+import com.br3ant.wanandroidcompose.ui.page.book.bookGraph
+import com.br3ant.wanandroidcompose.ui.page.book.chapter.ChapterDestination
+import com.br3ant.wanandroidcompose.ui.page.book.chapter.chapterGraph
 
 /**
  * Top-level navigation graph. Navigation is organized as explained at
@@ -48,8 +50,11 @@ fun WanNavHost(
         homeGraph(
             windowSizeClass = windowSizeClass
         )
-        tutorialGraph(
-            windowSizeClass = windowSizeClass
+        bookGraph(
+            navigateToChapter = { bookId, bookName -> navController.navigate("${ChapterDestination.route}/$bookId/$bookName") },
+            nestedGraphs = {
+                chapterGraph(onBackClick = { navController.popBackStack() })
+            }
         )
     }
 }

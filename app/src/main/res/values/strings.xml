@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">WanAndroidCompose</string>
     <string name="home">首页</string>
-    <string name="tutorial">教程</string>
+    <string name="book">教程</string>
+    <string name="book_app_bar_title">教程</string>
+    <string name="article_app_bar_title">文章</string>
 </resources>
